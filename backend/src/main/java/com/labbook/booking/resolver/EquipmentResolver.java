@@ -2,8 +2,7 @@ package com.labbook.booking.resolver;
 
 import com.labbook.booking.model.Equipment;
 import com.labbook.booking.model.EquipmentStatus;
-import com.labbook.booking.repository.EquipmentRepository;
-import com.labbook.boooking.service.EquipmentService;
+import com.labbook.booking.service.EquipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -36,7 +35,7 @@ public class EquipmentResolver {
 
     @QueryMapping
     public List<Equipment> equipmentByStatus(@Argument EquipmentStatus status) {
-        return equipmentService.findByStatus(status)
+        return equipmentService.findByStatus(status);
     }
     
     @MutationMapping
@@ -46,7 +45,7 @@ public class EquipmentResolver {
 
     @MutationMapping
     public Equipment createEquipment(@Argument Map<String, Object> equipmentInput){
-        return equipmentService.createEquipment(
+        return equipmentService.create(
             (String) equipmentInput.get("name"),
             (String) equipmentInput.get("category"),
             (String) equipmentInput.get("description"),
