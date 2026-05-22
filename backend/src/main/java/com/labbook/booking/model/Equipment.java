@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "equipment")
@@ -43,6 +44,8 @@ public class Equipment {
     private String serialNumber;
 
     private Integer purchaseYear;
+
+    private LocalDate calibrationDue;
 
     private String location;
 
