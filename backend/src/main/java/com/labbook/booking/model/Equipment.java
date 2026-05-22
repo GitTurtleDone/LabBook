@@ -5,8 +5,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
 import java.time.LocalDate;
 
 @Entity
@@ -30,7 +28,7 @@ public class Equipment {
     @Column(length = 1000)
     private String description;
 
-    @Enumerate(EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private EquipmentStatus status;
 
