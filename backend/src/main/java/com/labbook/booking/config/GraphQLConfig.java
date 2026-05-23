@@ -1,6 +1,6 @@
 package com.labbook.booking.config;
 
-import graphql.scalars.ExtendedScalar;
+import graphql.scalars.ExtendedScalars;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.graphql.execution.RuntimeWiringConfigurer;
