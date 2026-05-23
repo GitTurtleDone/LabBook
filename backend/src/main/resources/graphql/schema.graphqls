@@ -1,0 +1,129 @@
+type User {
+    id: ID!
+    email: String!
+    firstName: String
+    lastName: String
+    department: String
+    role: UserRole
+    createdAt: String
+    lastLoginAt: String
+}
+
+type Equipment {
+    id: ID!
+    name: String!
+    category: String!
+    description: String
+    status: EquipmentStatus!
+    connectingStr: String!
+    model: String
+    manufacturer: String
+    serialNumber: String
+    purchaseYear: Int
+    calibrationDue: String
+    location: String
+    requiresTraining: Boolean
+    imageUrl: String
+    videoUrl: String
+    documentationUrl: String
+    notes: String
+}
+
+type Booking {
+    id: ID!
+    equipment: Equipment!
+    user: User!
+    startTime: String!
+    endTime: String!
+    purpose: String
+    status: BookingStatus!
+    createdAt: String!
+}
+
+enum UserRole {
+    STUDENT
+    RESEARCHER
+    STAFF
+    ADMIN
+}
+
+enum EquipmentStatus {
+    AVAILABLE
+    IN_USE
+    MAINTENANCE
+    OUT_OF_SERVICE
+}
+
+enum BookingStatus {
+    CONFIRMED
+    CANCELLED
+    COMPLETED
+}
+
+type Query {
+    usersList: [User]
+    user(id: ID!): User
+    usersByRole(role: UserRole!): [User]
+    userByEmail(email: String!): User
+
+    equipmentList: [Equipment]
+    equipment(id: ID!): Equipment
+    equipmentByCategory(category: String!): [Equipment]
+    equipmentByStatus(status: EquipmentStatus!): [Equipment]
+
+    bookingsList: [Booking]
+    booking(id: ID!): Booking
+    bookingsByUser(userId: ID!): [Booking]
+    bookingsByEquipment(equipmentId: ID!): [Booking]
+}
+
+type Mutation {
+    createUser(userInput: UserInput!): User
+    updateUser(id: ID!, userInput: UserInput!): User
+    deleteUser(id: ID!): Boolean
+
+    createEquipment(equipmentInput: EquipmentInput!): Equipment
+    updateEquipment(id: ID!, equipmentInput: EquipmentInput!): Equipment
+    updateEquipmentStatus(id: ID!, status: EquipmentStatus!): Equipment
+    deleteEquipment(id: ID!): Boolean
+
+    createBooking(bookingInput: BookingInput!): Booking
+    updateBooking(bookingId: ID!, bookingInput: BookingInput!): Booking
+    cancelBooking(id: ID!): Boolean
+    deleteBooking(id: ID!): Boolean
+}
+
+input UserInput {
+    email: String!
+    password: String!
+    firstName: String
+    lastName: String
+    department: String
+    role: UserRole
+}
+
+input EquipmentInput {
+    name: String!
+    category: String!
+    description: String
+    connectingStr: String!
+    model: String
+    manufacturer: String
+    serialNumber: String
+    purchaseYear: Int
+    calibrationDue: String
+    location: String
+    requiresTraining: Boolean
+    imageUrl: String
+    videoUrl: String
+    documentationUrl: String
+    notes: String
+}
+
+input BookingInput {
+    equipmentId: ID!
+    userId: ID!
+    startTime: String!
+    endTime: String!
+    purpose: String
+}

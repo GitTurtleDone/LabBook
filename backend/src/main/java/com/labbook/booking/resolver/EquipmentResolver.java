@@ -3,6 +3,7 @@ package com.labbook.booking.resolver;
 import com.labbook.booking.model.Equipment;
 import com.labbook.booking.model.EquipmentStatus;
 import com.labbook.booking.service.EquipmentService;
+import com.labbook.booking.input.EquipmentInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
@@ -10,8 +11,6 @@ import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
-import java.util.Map;
-import java.time.LocalDate;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,28 +38,46 @@ public class EquipmentResolver {
     }
     
     @MutationMapping
-    public Equipment updateEquipment(@Argument Long id, @Argument EquipmentStatus status) {
+    public Equipment updateEquipmentStatus(@Argument Long id, @Argument EquipmentStatus status) {
         return equipmentService.updateStatus(id, status);
     }
 
     @MutationMapping
-    public Equipment createEquipment(@Argument Map<String, Object> equipmentInput){
+    public Equipment updateEquipment(@Argument Long id, @Argument EquipmentInput equipmentInput) {
+        return equipmentService.update(
+            id,
+            equipmentInput.name(), equipmentInput.category(), equipmentInput.description(),
+            equipmentInput.connectingStr(), equipmentInput.model(), equipmentInput.manufacturer(),
+            equipmentInput.serialNumber(), equipmentInput.purchaseYear(), equipmentInput.calibrationDue(),
+            equipmentInput.location(), equipmentInput.requiresTraining(), equipmentInput.imageUrl(),
+            equipmentInput.videoUrl(), equipmentInput.documentationUrl(), equipmentInput.notes()
+        );
+    }
+
+    @MutationMapping
+    public boolean deleteEquipment(@Argument Long id) {
+        equipmentService.deleteEquipment(id);
+        return true;
+    }
+
+    @MutationMapping
+    public Equipment createEquipment(@Argument EquipmentInput equipmentInput){
         return equipmentService.create(
-            (String) equipmentInput.get("name"),
-            (String) equipmentInput.get("category"),
-            (String) equipmentInput.get("description"),
-            (String) equipmentInput.get("connectingStr"),
-            (String) equipmentInput.get("model"),
-            (String) equipmentInput.get("manufacturer"),
-            (String) equipmentInput.get("serialNumber"),
-            (Integer) equipmentInput.get("purchaseYear"),
-            (LocalDate) equipmentInput.get("calibrationDue"),
-            (String) equipmentInput.get("location"),
-            (Boolean) equipmentInput.get("requiresTraining"),
-            (String) equipmentInput.get("imageUrl"),
-            (String) equipmentInput.get("videoUrl"),
-            (String) equipmentInput.get("documentationUrl"),
-            (String) equipmentInput.get("notes")
+            equipmentInput.name(),
+            equipmentInput.category(),
+            equipmentInput.description(),
+            equipmentInput.connectingStr(),
+            equipmentInput.model(),
+            equipmentInput.manufacturer(),
+            equipmentInput.serialNumber(),
+            equipmentInput.purchaseYear(),
+            equipmentInput.calibrationDue(),
+            equipmentInput.location(),
+            equipmentInput.requiresTraining(),
+            equipmentInput.imageUrl(),
+            equipmentInput.videoUrl(),
+            equipmentInput.documentationUrl(),
+            equipmentInput.notes()
         );
     }
 }

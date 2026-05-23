@@ -2,8 +2,8 @@ package com.labbook.booking.resolver;
 
 import com.labbook.booking.model.User;
 import com.labbook.booking.model.UserRole;
-import com.labbook.booking.repository.UserRepository;
 import com.labbook.booking.service.UserService;
+import com.labbook.booking.input.UserInput;
 import lombok.RequiredArgsConstructor;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -37,14 +37,24 @@ public class UserResolver {
     }
 
     @MutationMapping
-    public User updateUser(@Argument Long id, @Argument String email, @Argument String password, @Argument String firstName,
-                           @Argument String lastName, @Argument String department, @Argument UserRole role) {
-        return userService.updateUser(id, email, password, firstName, lastName, department, role);
+    public User updateUser(@Argument Long id, @Argument UserInput userInput) {
+        return userService.updateUser(
+            id, userInput.email(), userInput.password(), userInput.firstName(),
+            userInput.lastName(), userInput.department(), userInput.role()
+        );
     }
 
     @MutationMapping
-    public User createUser(@Argument String email, @Argument String password, @Argument String firstName,
-                           @Argument String lastName, @Argument String department, @Argument UserRole role) {
-        return userService.createUser(email, password, firstName, lastName, department, role);
+    public User createUser(@Argument UserInput userInput) {
+        return userService.createUser(
+            userInput.email(), userInput.password(), userInput.firstName(),
+            userInput.lastName(), userInput.department(), userInput.role()
+        );
+    }
+
+    @MutationMapping
+    public boolean deleteUser(@Argument Long id) {
+        userService.deleteUser(id);
+        return true;
     }
 }

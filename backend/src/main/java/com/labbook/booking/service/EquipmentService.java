@@ -68,6 +68,31 @@ public class EquipmentService {
     }
 
     @Transactional
+    public Equipment update(Long id, String name, String category, String description, String connectingStr,
+                              String model, String manufacturer, String serialNumber,
+                              Integer purchaseYear, LocalDate calibrationDue, String location, Boolean requiresTraining,
+                              String imageUrl, String videoUrl, String documentationUrl, String notes)
+    {
+        Equipment equipment = findById(id);
+        if (name != null) equipment.setName(name);
+        if (category != null) equipment.setCategory(category);
+        if (description != null) equipment.setDescription(description);
+        if (connectingStr != null) equipment.setConnectingStr(connectingStr);
+        if (model != null) equipment.setModel(model);
+        if (manufacturer != null) equipment.setManufacturer(manufacturer);
+        if (serialNumber != null) equipment.setSerialNumber(serialNumber);
+        if (purchaseYear != null) equipment.setPurchaseYear(purchaseYear);
+        if (calibrationDue != null) equipment.setCalibrationDue(calibrationDue);
+        if (location != null) equipment.setLocation(location);
+        if (requiresTraining != null) equipment.setRequiresTraining(requiresTraining);
+        if (imageUrl != null) equipment.setImageUrl(imageUrl);
+        if (videoUrl != null) equipment.setVideoUrl(videoUrl);
+        if (documentationUrl != null) equipment.setDocumentationUrl(documentationUrl);
+        if (notes != null) equipment.setNotes(notes);
+        return equipmentRepository.save(equipment);
+    }
+
+    @Transactional
     public void deleteEquipment(Long id) {
         equipmentRepository.deleteById(id);
     }

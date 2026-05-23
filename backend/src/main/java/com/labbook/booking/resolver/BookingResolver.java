@@ -4,7 +4,7 @@ import com.labbook.booking.model.Booking;
 import com.labbook.booking.model.Equipment;
 import com.labbook.booking.model.User;
 import com.labbook.booking.model.BookingStatus;
-import com.labbook.booking.model.EquipmentStatus;
+import com.labbook.booking.input.BookingInput;
 import com.labbook.booking.service.BookingService;
 
 import com.labbook.booking.service.EquipmentService;
@@ -47,26 +47,32 @@ public class BookingResolver {
     }
 
     @MutationMapping
-    public Booking createBooking(@Argument Long equipmentId, @Argument Long userId,
-                                 @Argument LocalDateTime startTime, @Argument LocalDateTime endTime,
-                                 @Argument String purpose) {
-        return bookingService.createBooking(equipmentId, userId, startTime, endTime, purpose);
+    public Booking createBooking(@Argument BookingInput bookingInput) {
+        return bookingService.createBooking(
+            bookingInput.equipmentId(), bookingInput.userId(),
+            LocalDateTime.parse(bookingInput.startTime()),
+            LocalDateTime.parse(bookingInput.endTime()),
+            bookingInput.purpose());
     }
 
     @MutationMapping
-    public Booking updateBooking(@Argument Long bookingId, @Argument Long equipmentId, @Argument Long userId,
-                                 @Argument LocalDateTime startTime, @Argument LocalDateTime endTime,
-                                 @Argument String purpose, @Argument BookingStatus status) {
-        return bookingService.updateBooking(bookingId, equipmentId, userId, startTime, endTime, purpose, status);
+    public Booking updateBooking(@Argument Long bookingId, @Argument BookingInput bookingInput) {
+        return bookingService.updateBooking(
+            bookingId, bookingInput.equipmentId(), bookingInput.userId(),
+            LocalDateTime.parse(bookingInput.startTime()),
+            LocalDateTime.parse(bookingInput.endTime()),
+            bookingInput.purpose(), null);
     }
 
     @MutationMapping
-    public void deleteBooking(@Argument Long id) {
+    public boolean deleteBooking(@Argument Long id) {
         bookingService.deleteBooking(id);
+        return true;
     }
 
     @MutationMapping
-    public void cancelBooking(@Argument Long id) {
+    public boolean cancelBooking(@Argument Long id) {
         bookingService.cancelBooking(id);
+        return true;
     }
 }

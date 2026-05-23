@@ -61,7 +61,9 @@ public class BookingService {
         booking.setStartTime(startTime);
         booking.setEndTime(endTime);
         booking.setPurpose(purpose);
-        booking.setStatus(bookingStatus);
+        if (bookingStatus != null) {
+            booking.setStatus(bookingStatus);
+        }
         return bookingRepository.save(booking);
     }
 
