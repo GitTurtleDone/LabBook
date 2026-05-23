@@ -89,7 +89,7 @@ type Mutation {
 
     createBooking(bookingInput: BookingInput!): Booking
     updateBooking(bookingId: ID!, bookingInput: BookingInput!): Booking
-    cancelBooking(id: ID!): Boolean
+    cancelBooking(id: ID!): Booking
     deleteBooking(id: ID!): Boolean
 }
 

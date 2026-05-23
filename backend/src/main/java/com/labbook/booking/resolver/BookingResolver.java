@@ -71,8 +71,8 @@ public class BookingResolver {
     }
 
     @MutationMapping
-    public boolean cancelBooking(@Argument Long id) {
-        bookingService.cancelBooking(id);
-        return true;
+    public Booking cancelBooking(@Argument Long id) {  
+        return  bookingService.cancelBooking(id);
+        
     }
 }

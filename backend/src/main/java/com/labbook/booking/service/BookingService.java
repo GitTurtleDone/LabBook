@@ -102,11 +102,11 @@ public class BookingService {
     }
 
     @Transactional
-    public void cancelBooking(Long id) {
+    public Booking cancelBooking(Long id) {
         Booking booking = bookingRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Booking with Id %s not found".formatted(id)));
         booking.setStatus(BookingStatus.CANCELLED);
-        bookingRepository.save(booking);
+        return bookingRepository.save(booking);
     }
 
     @Transactional
