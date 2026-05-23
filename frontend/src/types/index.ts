@@ -42,3 +42,11 @@ export interface Booking {
   status: BookingStatus;
   createdAt?: string;
 }
+
+export interface BookingInput {
+  equipmentId: string;
+  userId: string;
+  startTime: string;
+  endTime: string;
+  purpose?: string;
+}
