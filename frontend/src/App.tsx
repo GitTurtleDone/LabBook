@@ -1,5 +1,6 @@
 import { useState } from "react";
 import EquipmentList from "./components/EquipmentList";
+import BookingPanel from "./components/BookingPanel";
 import type { Equipment } from './types';
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
           selectedId={selected?.id ?? null}
           onSelect={setSelected}
         />
+        <BookingPanel equipment={selected} />
+
       </div>
     </div>
   );
