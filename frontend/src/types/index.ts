@@ -12,6 +12,16 @@ export interface User {
     createdAt?: string;
     lastLoginAt?: string;
 }
+
+export interface UserInput {
+  email: string;
+  password: string;
+  firstName?: string;
+  lastName?: string;
+  department?: string;
+  role?: UserRole;
+}
+
 export interface Equipment {
   id: string;
   name: string;
@@ -30,6 +40,24 @@ export interface Equipment {
   videoUrl?: string;
   documentationUrl?: string;
   notes: string;
+}
+
+export interface EquipmentInput {
+  name: string;
+  category: string;
+  description?: string;
+  connectingStr: string;
+  model?: string;
+  manufacturer?: string;
+  serialNumber?:string;
+  purchaseYear?: number;
+  calibrationDue?: string;
+  location?: string;
+  requiresTraining?: boolean;
+  imageUrl?: string;
+  videoUrl?:string;
+  documentationUrl?: string;
+  notes?: string;
 }
 
 export interface Booking {

@@ -76,78 +76,78 @@ function BookingPanel({ equipment }: Props) {
 
     return (
         <div className='card'>
-            <h2>{equipment.name}</h2>
-            <p>{equipment.description}</p>
+            <h2> {equipment.name} </h2>
+            <p style={{ color: '#718096', marginTop: 0}}>{equipment.description}</p>
             <h3>Reserve a time slot</h3>
-            {successMsg && <p className="success">{successMsg}</p>}
-            {createBookingError && (
-                <p className="error">
-                    Error creating booking: {createBookingError.message}
-                </p>
-            )}
+            {successMsg && <div className='success'>{successMsg}</div>}
+            {createBookingError && <div className='error'> {createBookingError?.message}</div>}
             <form onSubmit={(e) => { e.preventDefault(); handleSubmit()}}>
-                <label>User *</label>
-                <select 
-                    value={userId} 
-                    onChange={(e) => setUserId(e.target.value)}
-                    required
-                >
-                    <option value=''>-- Select User --</option>
+                <label>User</label>
+                <select value={userId} onChange={(e) => setUserId(e.target.value)} required>
+                    <option value=''>--- Select user ---</option>
                     {usersData?.usersList.map((u) => (
-                        <option key={u.id} value={u.id}>{u.firstName} {u.lastName} ({u.department})</option>
+                        <option key={u.id} value={u.id}>{u.firstName} {u.lastName} {u.department}</option>
                     ))}
                 </select>
 
-                <label>Start Time *</label>
+                <label>Start Time</label>
                 <input
-                    type="datetime-local"
+                    type='time-local'
                     value={startTime}
                     onChange={(e) => setStartTime(e.target.value)}
                     required
                 />
 
-                <label>End Time *</label>
+                <label>End Time</label>
                 <input
-                    type="datetime-local"
+                    type='time-local'
                     value={endTime}
                     onChange={(e) => setEndTime(e.target.value)}
+                    required
                 />
 
-                <label> Purpose </label>
+                <label>Purpose (Optional)</label>
                 <textarea
                     value={purpose}
                     onChange={(e) => setPurpose(e.target.value)}
                     rows={2}
-                    placeholder="What will you use this equipment for?"
+                    placeholder='e.g. sputter AgOx'
                 />
 
-                <button
-                    type="submit"
-                    disabled={creatingBooking || equipment.status in ['OUT_OF_SERVICE', 'MAINTENANCE']}
-                >
-                    {creatingBooking ? 'Creating...' : 'Confirm Booking'}
-                </button>
+                <button type='submit' disabled={creatingBooking || 
+                    equipment.status == 'OUT_OF_SERVICE'}>
+                        {creatingBooking ? 'Booking ...' : 'Confirm Booking' }
+                    </button>
             </form>
 
-            <h3 style={{ marginTop: '2rem' }}>Existing bookings</h3>
-            {bookingsData?.bookingsByEquipment.length === 0 && (
-                <p style={{ color: '#718096'}}>No bookings yet.</p>
-            )}
-            <ul className="booking-list">
-                {bookingsData?.bookingsByEquipment.map((b)=>(
-                    <li key={b.id} className='`booking-item ${b.status === 'CANCELLED' ? 'cancelled' : ''}`>
-
-                    </li>
-                ))}
-            </ul>
+            <h3 style={{ marginTop: '2rem'}}>Existing bookings</h3>
+            {bookingsData?.bookingsByEquipment.map((b) => (
+                <li key={b.id} className={`booking-item ${b.status === 'CANCELLED' ? 'canceled' : '' }`}>
+                    <div className='booking-time'>
+                        {new Date(b.startTime).toLocaleString()} → {new Date(b.endTime).toLocaleString()}
+                    </div>
+                    <div className='booking-detail'>
+                        {b.user.firstName} {b.user.lastName} · {b.purpose || '--'} · <em>{b.status}</em> 
+                    </div>
+                    {b.status === 'CONFIRMED' && (
+                        <button
+                        style={{
+                            background: 'transparent',
+                            color: '#c53030',
+                            padding: '0.5rem 0',
+                            fontSize: '0.8rem'
+                        }}
+                        onClick={() => cancelBooking({ variables: {id: b.id}})}
+                       >
+                        Cancel    
+                        </button>
+                    )}
+                </li>
+            ))}
 
         </div>
 
-    );
-    
-        
-
-
+    );    
 }
 
 export default BookingPanel;

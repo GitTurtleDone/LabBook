@@ -58,6 +58,42 @@ export const GET_USERS = gql`
   }
 `;
 
+export const CREATE_USER = gql`
+  mutation CreateUser($user: UserInput!) {
+    createUser(userInput: $user) {
+      id
+      email
+      firstName
+      lastName
+      department
+      lastLoginAt
+    }
+  }
+`;
+
+export const CREATE_EQUIPMENT = gql`
+  mutation CreateEquipment($equipment: EquipmentInput!) {
+    createEquipment(equipmentInput: $equipment) {
+      id
+      name
+      category
+      description
+      status
+      connectingStr
+      model
+      manufacturer
+      serialNumber
+      purchaseYear
+      calibrationDue
+      location
+      requiresTraining
+      imageUrl
+      videoUrl
+      documentationUrl
+      notes
+    }
+  }
+`;
 export const CREATE_BOOKING = gql`
   mutation CreateBooking($bookingInput: BookingInput!) {
     createBooking(bookingInput: $bookingInput) {
