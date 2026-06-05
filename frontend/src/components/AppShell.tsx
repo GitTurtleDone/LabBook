@@ -1,4 +1,5 @@
 import { Drawer, Box, List, ListItem, ListItemButton, ListItemText} from "@mui/material";
+import { NavLink, Outlet} from "react-router-dom";
 // import Drawer from "@mui/material/Drawer";
 // import Box from "@mui/material/Box";
 // import List from "@mui/material/Button";
@@ -15,29 +16,34 @@ export default function AppShell() {
     const [showSideBar, setShowSideBar] = useState(true);
     const navItems: NavItem[] = [
         { label: "Home", path: "/"},
-        { label: "Users", path: "/Users"},
-        { label: "Equipment", path: "/Equipment"},
-        { label: "Bookings", path: "/Bookings"}
+        { label: "Users", path: "/users"},
+        { label: "Equipment", path: "/equipment"},
+        { label: "Bookings", path: "/bookings"}
     ]
     return (
-        <div>
-            <Drawer anchor="left" open={showSideBar}>
-                <Box sx={{ width: 150}} >
-                    <List>               
-                        { navItems.map((i) => (
-                            <ListItem key={i.label} disablePadding>
-                                <ListItemButton>
-                                    <ListItemText primary={i.label} />
-                                </ListItemButton>
-                            </ListItem>
-                            
-                        ))}    
-                    </List>
-                </Box>
-            </Drawer>
-            
-        </div>
-        
-    );    
+    <Box sx={{ display: 'flex' }}>
+        <Drawer variant="permanent" anchor="left" open={showSideBar}>
+            <Box sx={{ width: 150 }}>
+                <List>
+                    {navItems.map((i) => (
+                        <NavLink key={i.path} to={i.path} end>
+                            {({ isActive }: { isActive: boolean }) => (
+                                <ListItem disablePadding>
+                                    <ListItemButton selected={isActive}>
+                                        <ListItemText primary={i.label} />
+                                    </ListItemButton>
+                                </ListItem>
+                            )}
+                        </NavLink>
+                    ))}
+                </List>
+            </Box>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, backgroundColor: '#ffffff', minHeight: '100vh' }}>
+            <Outlet />
+        </Box>
+    </Box>
+);
+    
 }
 
