@@ -11,7 +11,8 @@ function App() {
       {/* <header>
         <h1>Lab Equipment Booking</h1>
       </header> */}
-      <div className='grid'>
+      <div >
+        {/* <h1>LabBook</h1> */}
         <AppShell />
         {/* <EquipmentList
           selectedId={selected?.id ?? null}
