@@ -1,35 +1,31 @@
-import { useQuery } from "@apollo/client";
-import { GET_EQUIPMENT_LIST } from "../graphql/queries";
-import type { Equipment } from "../types";
+import * as z from "zod";
+import { useForm } from "react-hook-form";
+import { Category } from "@mui/icons-material";
 
-interface Props {
-  selectedId: string | null;
-  onSelect: (eq: Equipment) => void;
-}
+const equipmentSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  category: z.string(),
+  description: z.string().optional(),
+  connectingString: z.string(),
+  model: z.string().optional(),
+  manufacturer: z.string().optional(),
+  serialNumber: z.string().optional(),
+  purchaseYear: z.number().optional(),
+  calibrationDur: z.string().optional(),
+  loation: z.string().optional(),
+  requiresTraining: z.boolean().optional(),
+  imageUrl: z.string().optional(),
+  videoUrl: z.string().optional(),
+  documentationUrl: z.string().optional(),
+  notes: z.string().optional,
+})
 
-export default function EquipmentPage({ selectedId, onSelect }: Props) {
-  const { loading, error, data } = useQuery<{equipmentList: Equipment[]}>(GET_EQUIPMENT_LIST);
 
-  if (loading) return <p>Loading equipment...</p>;
-  if (error) return <p className="error">Error loading equipment: {error.message}</p>;
+
+export default function EquipmentPage() {
+
   return (
-    <div>
-      <h2>Equipment List</h2>
-      {data?.equipmentList.map((eq) => (
-        <div 
-          key={eq.id}
-          className={`equipment-item ${selectedId === eq.id ? 'selected': ''}`}
-          onClick = { () => onSelect(eq)}
-        >
-          <div className="equipment-name">
-            {eq.name}
-            <span>{eq.status}</span>
-          </div>
-          <div className="equipment-category">
-            {eq.category}
-          </div>
-        </div>
-      ))}
-    </div>
+    <h3>Equipment</h3>
   );
 }
