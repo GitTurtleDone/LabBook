@@ -1,6 +1,6 @@
 import * as z from "zod";
 
-const userSchema = z.object({
+export const userSchema = z.object({
   id: z.string(),
   email: z.email("Invalid email"),
   password: z.string(),
@@ -12,12 +12,12 @@ const userSchema = z.object({
   lastLoginAt: z.string().optional()
 });
 
-const userInputSchema = userSchema.omit({id: true, createdAt: true, lastLoginAt: true});
+export const userInputSchema = userSchema.omit({id: true, createdAt: true, lastLoginAt: true});
 
 export type User = z.infer<typeof userSchema>;
 export type UserInput = z.infer<typeof userInputSchema>;
 
-const equipmentSchema = z.object({
+export const equipmentSchema = z.object({
   id: z.string(),
   name: z.string(),
   category: z.string(),
@@ -31,18 +31,18 @@ const equipmentSchema = z.object({
   calibrationDue: z.string().optional(),
   location: z.string().optional(),
   requiresTraining: z.boolean(),
-  imageUrl: z.string().optional(),
-  videoUrl: z.string().optional(),
-  documentationUrl: z.string().optional(),
-  notes: z.string(),
+  imageUrl: z.url().optional(),
+  videoUrl: z.url().optional(),
+  documentationUrl: z.url().optional(),
+  notes: z.string().optional(),
 })
 
-const equipmentInputSchema = equipmentSchema.omit({ id: true, status: true });
+export const equipmentInputSchema = equipmentSchema.omit({ id: true, status: true });
 
 export type Equipment = z.infer<typeof equipmentSchema>;
 export type EquipmentInput = z.infer<typeof equipmentInputSchema>;
 
-const bookingSchema = z.object({
+export const bookingSchema = z.object({
   id: z.string(),
   equipment: equipmentSchema,
   user: userSchema,
@@ -53,7 +53,7 @@ const bookingSchema = z.object({
   createdAt: z.string().optional(),
 })
 
-const bookingInputSchema = bookingSchema
+export const bookingInputSchema = bookingSchema
       .omit({id: true, equipment: true, user: true, status: true, createdAt: true})
       .extend({equipmentId: z.string(), userId: z.string()})
 
