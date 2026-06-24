@@ -217,7 +217,7 @@ export default function EquipmentPage() {
                   ></OutlinedInput>
                 )}
                 <ErrorMessage
-                  sx={{ textAlign: "right" }}
+                  sx={{ textAlign: "left" }}
                   errors={errors}
                   name={elementKey}
                   render={({ message }) => (

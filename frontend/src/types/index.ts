@@ -3,7 +3,13 @@ import * as z from "zod";
 export const userSchema = z.object({
   id: z.string(),
   email: z.email("Invalid email"),
-  password: z.string(),
+  password: z.string().min(5)
+            .regex(
+              /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$/,
+            "Password must have at least one lower case, one uppercase, one digit, and one special characer."),
+  // password: z.string("Password must have at least 5 characters cointaining \
+    // at least one lower case, one upper case, one digit, and one special character").min(5).regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/),
+  
   firstName: z.string().optional(),
   lastName: z.string().optional(),
   department: z.string().optional(),
