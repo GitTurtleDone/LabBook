@@ -1,6 +1,6 @@
 
 import { Typography, Button, Stack, Box, OutlinedInput } from '@mui/material';
-import * as z  from 'zod';
+import {z} from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { ErrorMessage } from '@hookform/error-message';
@@ -39,7 +39,7 @@ export default function UserPage() {
         resolver: zodResolver(userInputSchema),
         defaultValues: {
             email: "John.Setler@yahoo.com",
-            password: "johset",
+            password: "johsetA@45",
             firstName: "John",
             lastName: "Setler",
             department: "ECE",
@@ -49,8 +49,9 @@ export default function UserPage() {
 
     const [createUser] = useMutation(CREATE_USER)
     const onCreateUser = async (userInput: UserInput) => {
-        await createUser({ variables: {userInput}})
-        console.log("User to be created: ", userInput)
+        console.log("User to be created: ", JSON.stringify(userInput))
+        await createUser({ variables: {user: userInput}})
+        
     }
     return (
         <div>
