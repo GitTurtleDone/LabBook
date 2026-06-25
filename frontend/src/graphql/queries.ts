@@ -1,7 +1,7 @@
 // gql template literal tag - parses GraphQL query string into a structured document object
 import { gql } from "@apollo/client";
 
-export const GET_EQUIPMENT = gql`
+export const GET_EQUIPMENT_LIST = gql`
   query GetEquipment {
     equipmentList {
       id

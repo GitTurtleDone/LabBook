@@ -56,7 +56,7 @@ export default function UserPage() {
     return (
         <div>
             <h3>Users</h3>
-            <Stack sx={{width: '40%', pl: 10, pr: 10}}>
+            <Stack sx={{width: '60%', pl: 10, pr: 10}}>
                 {userElemnentLayout.map(({label, type, elementKey, disabled, registered}) => (
                     <Box key={elementKey} sx={{display: 'grid', gridTemplateColumns: '1fr 2fr', align: 'left', pt: 2, gap: 5   }}>
                         <Typography sx={{textAlign: 'left'}}>{label}</Typography>
