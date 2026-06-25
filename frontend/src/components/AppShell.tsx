@@ -9,12 +9,6 @@ import {
   Menu,
 } from "@mui/material";
 import { NavLink, Outlet } from "react-router-dom";
-// import Drawer from "@mui/material/Drawer";
-// import Box from "@mui/material/Box";
-// import List from "@mui/material/Button";
-// import ListItem from "@mui/material/ListItem";
-// import ListItemButton from "@mui/material/ListItemButton";
-// import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
 import type { from } from "@apollo/client";
 // import { PersonIcon, PrecisionManufacturingIcon} from '@mui/icons-material';
