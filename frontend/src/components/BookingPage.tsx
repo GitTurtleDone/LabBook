@@ -104,10 +104,10 @@ export default function BookingPage() {
       purpose: "",
     },
   });
-  const createBooking = useMutation (CREATE_BOOKING)
-  // const onCreateBooking = async (bookingInput: BookingInput) => {
-  //   await createBooking ({ variables: {booking: {bookingInput.id, bookingInput.startTime,} }})
-  // } 
+  const [createBooking] = useMutation (CREATE_BOOKING)
+  const onCreateBooking = async (bookingInput: BookingInput) => {
+    await createBooking ({ variables: {bookingInput }});
+  } 
   return (
     <div>
       <h3>Booking an equipment</h3>
@@ -157,7 +157,7 @@ export default function BookingPage() {
             ),
           )}
           <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', mt: 5, gap: 5}}>
-            <Button variant="contained" sx={{width: 100}} > Create</Button>
+            <Button variant="contained" sx={{width: 100}} onClick={handleSubmit(onCreateBooking)} > Create</Button>
             <Button variant="contained" sx={{width: 100}} color="error">Cancel</Button>
           </Box>
           
