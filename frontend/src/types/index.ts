@@ -74,7 +74,11 @@ export const bookingInputSchema = bookingSchema
     status: true,
     createdAt: true,
   })
-  .extend({ equipmentId: z.string(), userId: z.string() });
+  .extend({ equipmentId: z.string(), userId: z.string() })
+  .refine((data) => new Date(data.startTime) < new Date(data.endTime), {
+    message: "Start time must be before end time",
+    path:["endTime"]
+  });
 
 export type Booking = z.infer<typeof bookingSchema>;
 export type BookingInput = z.infer<typeof bookingInputSchema>;
