@@ -1,0 +1,12 @@
+curl -X POST "http://localhost:8080/graphql" -H "Content-Type: application/json" -d '{"query": "mutation { createUser (userInput: { email: \"giang@gmail.com\", password: \"hanoi\", firstName: \"Giang\", lastName: \"Dang\", department: \"ECE\", role: RESEARCHER }) { id email firstName lastName } }" }'
+
+
+curl -X POST "http://localhost:8080/graphql" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "mutation { createUser(userInput: { email: \"giang@gmail.com\", password: \"hanoi\", firstName: \"Giang\", lastName: \"Dang\", department: \"ECE\", role: RESEARCHER }) { id email firstName lastName } }"}'
+
+
+
+regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]+$/)
+
+regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]+$/)

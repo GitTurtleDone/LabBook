@@ -7,8 +7,14 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  ListItemIcon,
   Button,
+  Divider,
+  Collapse,
+  IconButton,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_USERS, GET_EQUIPMENT_LIST, CREATE_BOOKING } from "../graphql/queries";
@@ -21,6 +27,7 @@ import {
 } from "../types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod/src/zod.js";
+import { Add } from "@mui/icons-material";
 
 type BookingInputElementLayout = {
   label: string;
@@ -34,6 +41,11 @@ type BookingInputElementLayout = {
 export default function BookingPage() {
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const [equipmentId, setEquipmentId] = useState<string | undefined>(undefined);
+  const [showEquipmentList, setShowEquipmentList] = useState(false);
+  const [showUserList, setShowUserList] = useState(false);
+  const [showBookingByUserList, setShowBookingByUserList] = useState(false);
+  const [showBookingByEquipmentList, setShowBookingByEquipmentList] = useState(false);
+  
   const bookingInputElementLayout: BookingInputElementLayout[] = [
     {
       label: "Booking ID",
@@ -110,30 +122,52 @@ export default function BookingPage() {
   } 
   return (
     <div>
-      <h3>Booking an equipment</h3>
+      <Typography variant="h4" sx={{mt:5, mb: 5}} color="black">Bookings</Typography>
       <Box sx={{ display: "grid", gridTemplateColumns: "1fr 2fr" }}>
         <Box sx={{ pl: 5, align: "left" }}>
-          <Typography variant='h6' sx={{textAlign: 'left'}}>Select an equipment</Typography>
-          <List>
-            {equipmentData?.equipmentList.map((e) => (
-              <ListItemButton key={e.id} onClick={() => { setEquipmentId(e.id); setValue('equipmentId', e.id); }}>
-                <ListItemText primary={e.name}></ListItemText>
-              </ListItemButton>
-            ))}
-          </List>
-          <Typography variant="h6" sx={{textAlign: 'left'}}>Select user</Typography>
-          {/* <Typography>{userData?.userList[0].email}</Typography> */}
-          <List>
-            {userData?.usersList.map((u) => (
-              <ListItemButton key={u.id} onClick={() => { setUserId(u.id); setValue('userId', u.id); }}>
-                <ListItemText primary={u.firstName + " " + u.lastName} />
-              </ListItemButton>
-            ))}
-          </List>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton size="small" onClick={() => setShowEquipmentList(prev => !prev)}>
+              {showEquipmentList ? <ExpandLessIcon /> : <AddIcon />}
+            </IconButton>
+            <Typography variant='h6' sx={{ textAlign: 'left' }}>Select an equipment</Typography>
+          </Box>
+          <Collapse in={showEquipmentList}>
+            <List>
+              {equipmentData?.equipmentList.map((e) => (
+                <ListItemButton key={e.id} onClick={() => { setEquipmentId(e.id); setValue('equipmentId', e.id); }}>
+                  <ListItemText primary={e.name}></ListItemText>
+                </ListItemButton>
+              ))}
+            </List>
+          </Collapse>
+          {/* <Divider sx={{}}></Divider> */}
+          <Box sx={{display: 'flex', alignItems: 'center' }}>
+            <IconButton size="small" onClick={() => setShowUserList(!showUserList)}>
+              {showUserList ? <ExpandLessIcon></ExpandLessIcon> : <AddIcon></AddIcon> }
+            </IconButton> 
+            <Typography variant="h6" sx={{textAlign: 'left'}}>Select user</Typography>
+          </Box>
+          
+          <Collapse in={showUserList}>
+            <List>
+              {userData?.usersList.map((u) => (
+                <ListItemButton key={u.id} onClick={() => { setUserId(u.id); setValue('userId', u.id); }}>
+                  <ListItemText primary={u.firstName + " " + u.lastName} />
+                </ListItemButton>
+              ))}
+            </List>
+          </Collapse>
+          
           
         </Box>
         <Stack>
-          <Typography variant="h5" sx={{pb: 5}}>Reserve a Booking</Typography>
+          <Box sx={{display: 'grid', gridTemplateColumns: '1fr 10fr' }}>
+            <Button sx={{width: 2}} size="small">
+              <AddIcon sx={{p:0, fontSize: 60}} ></AddIcon>
+            </Button>
+            <Typography variant="h6" sx={{pb: 5}}>Reserve a Booking</Typography>
+          </Box> 
+                     
           {bookingInputElementLayout.map(
             ({ label, type, elementKey, disabled, registered }) => (
               <Box
