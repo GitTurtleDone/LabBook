@@ -6,4 +6,4 @@ This repository is used to facilitate equipment booking in laboratories such as 
 
 ### Stacks:
 
-React, Typescript, Java, Srping Boot, and PostgreSQL.
+React, Typescript, Java, Srping Boot.
