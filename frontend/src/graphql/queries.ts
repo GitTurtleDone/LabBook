@@ -24,7 +24,19 @@ export const GET_EQUIPMENT_LIST = gql`
     }
   }
 `;
-
+export const GET_BOOKINGS_FOR_USER = gql`
+  query GetBookingsForUser($userId: ID!) {
+    bookingsByUser(userId: $userId) {
+      id
+      startTime
+      endTime
+      purpose
+      equipment {
+        name
+      }
+    }
+  }
+`;
 export const GET_BOOKINGS_FOR_EQUIPMENT = gql`
   query GetBookingsForEquipment($equipmentId: ID!) {
     bookingsByEquipment(equipmentId: $equipmentId) {

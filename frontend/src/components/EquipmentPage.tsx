@@ -154,15 +154,15 @@ export default function EquipmentPage() {
   } = useForm<EquipmentInput>({
     resolver: zodResolver(equipmentInputSchema),
     defaultValues: {
-      name: "Equipment 1",
+      name: "Keithley 2400",
       category: "Electrical",
-      description: "",
+      description: "1A max",
       connectingStr: "::STR::0023",
       model: "",
       manufacturer: "",
       serialNumber: "",
       purchaseYear: 2006,
-      calibrationDue: "19-06-2027",
+      calibrationDue: "19/06/2027",
       location: "",
       requiresTraining: true,
       imageUrl: "https://local.host.com",

@@ -38,12 +38,12 @@ export default function UserPage() {
     const {handleSubmit, register, formState: { errors , isSubmitting }} = useForm({
         resolver: zodResolver(userInputSchema),
         defaultValues: {
-            email: "John.Setler@yahoo.com",
-            password: "johsetA@45",
-            firstName: "John",
-            lastName: "Setler",
+            email: "Giang.Dang@semit-tech.com",
+            password: "gtdA@45",
+            firstName: "Giang",
+            lastName: "Dang",
             department: "ECE",
-            role: 'STUDENT',
+            role: 'RESEARCHER',
         }
     })
 
