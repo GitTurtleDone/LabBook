@@ -48,6 +48,7 @@ type BookingInputElementLayout = {
 export default function BookingPage() {
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const [equipmentId, setEquipmentId] = useState<string | undefined>(undefined);
+  const [bookingId, setBookingId] = useState<string | undefined>(undefined);
   const [showEquipmentList, setShowEquipmentList] = useState(false);
   const [showUserList, setShowUserList] = useState(false);
   const [showBookingByUserList, setShowBookingByUserList] = useState(false);
@@ -232,10 +233,15 @@ export default function BookingPage() {
           <Collapse in={showBookingByEquipmentList}>
             {bookingsByEquipmentData?.bookingsByEquipment.map((b) =>
               <Box sx={{display:"flex", alignItems: "top"}}>
-                <ListItemButton>
-                  <ListItemText primary={b.id + " | " + b.startTime + " | " 
-                    + b.endTime + " | " + b.user.firstName + " " + b.user.lastName} /> 
-                </ListItemButton> 
+                <ListItemButton key={b.id} onClick={() => {
+                  setBookingId(b.id)
+                  setValue("equipmentId", b.equipment.id)
+                  setValue("userId", b.user.id)
+                  setValue("startTime", b.startTime)
+                  setValue("endTime", b.endTime)}}>
+                  <ListItemText primary={b.id + " | " + b.startTime + " | "
+                    + b.endTime + " | " + b.user.firstName + " " + b.user.lastName + " | " + b.status} />
+                </ListItemButton>
               </Box>
             )}
           </Collapse>
@@ -253,9 +259,18 @@ export default function BookingPage() {
           <Collapse in={showBookingByUserList}>
             {
               bookingsByUserData?.bookingsByUser.map((b) => 
-                <ListItemButton>
+                <ListItemButton key={b.id} onClick={() => {
+                  setBookingId(b.id)
+                  setValue("equipmentId", b.equipment.id)
+                  setValue("userId", b.user.id)
+                  setValue("startTime", b.startTime)
+                  setValue("endTime", b.endTime)
+                  setValue("purpose", b.purpose) 
+                } 
+
+                }>
                   <ListItemText primary={b.id + " | " + b.startTime + " | " + b.endTime
-                     + " | " + b.equipment.name
+                     + " | " + b.equipment.name + " | " + b.status
                   }/>
                 </ListItemButton>
 
@@ -303,6 +318,7 @@ export default function BookingPage() {
                     <OutlinedInput
                       type={type}
                       disabled={disabled}
+                      value={bookingId ?? ""}
                     ></OutlinedInput>
                   )}
                 </Box>

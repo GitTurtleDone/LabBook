@@ -31,8 +31,13 @@ export const GET_BOOKINGS_FOR_USER = gql`
       startTime
       endTime
       purpose
+      status
       equipment {
+        id
         name
+      }
+      user {
+        id
       }
     }
   }
@@ -52,6 +57,9 @@ export const GET_BOOKINGS_FOR_EQUIPMENT = gql`
         lastName
         department
         role
+      }
+      equipment {
+      id
       }
     }
   }
